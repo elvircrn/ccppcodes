@@ -1,0 +1,68 @@
+#include <iostream>
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <string>
+#include <cstring>
+
+using namespace std;
+
+struct node
+{
+	node *nodes [26];
+
+	node() { for (int i = 0; i < 26; i++) nodes [i] = NULL; }
+	
+	node *add_node(char c)
+	{
+		if (nodes [c - 'a'] == NULL)
+			nodes [c - 'a'] = new node();
+		return nodes [c - 'a'];
+	}
+};
+
+struct trie
+{
+	node *root;
+
+	trie() { root = new node(); }
+	
+	void add_word (const string &word)
+	{
+		node *current_node = root;
+		for (int i = 0; i < word.length(); i++)
+			current_node = current_node->add_node(word [i]);
+	}
+
+	void traverse()
+	{
+		traverse(root);
+	}
+
+	void traverse(node *current_node)
+	{
+		for (int i = 0; i < 26; i++)
+		{
+			if (current_node->nodes [i] != NULL)
+			{
+				putchar (i + 'a');
+				traverse(current_node->nodes [i]);
+			}
+		}
+	}
+};
+
+int main()
+{
+	trie t;
+
+	t.add_word("elvir");
+	t.add_word("herman");
+
+	node *current_node = t.root;
+
+	t.traverse();
+
+	return 0;
+}
+

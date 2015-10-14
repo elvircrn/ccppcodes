@@ -1,0 +1,43 @@
+#include <iostream>
+#include <cstdio>
+#include <cstdlib>
+
+using namespace std;
+
+typedef long long ll;
+
+const ll MOD = 1e9 + 7;
+
+ll n;
+
+ll fast_pow(ll base, ll power)
+{
+	if (power == 0LL)
+		return 1LL;
+	else if (power == 1)
+		return base;
+	else if (power % 2 == 0)
+	{
+		ll t = fast_pow(base, power / 2);
+
+		return ((t % MOD) * (t % MOD)) % MOD;
+	}
+	else
+		return ((fast_pow(base, power - 1) % MOD) * (base % MOD)) % MOD;
+}
+
+int main()
+{
+	scanf ("%d", &n);
+
+	ll total = fast_pow (3, 3 * n);
+	ll div   = fast_pow (7, n);
+
+	if (total - div < 0)
+		cout << MOD - (div - total) << endl;
+	else
+		cout << total - div << endl;
+
+	
+	return 0;
+}

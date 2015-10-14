@@ -1,0 +1,78 @@
+#include <iostream>
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+
+using namespace std;
+
+struct node
+{
+	int val;
+	node *left, *right;
+
+	node()
+	{
+		left  = NULL;
+		right = NULL;
+	}
+
+	node(int _val)
+	{
+		val = _val;
+
+		left  = NULL;
+		right = NULL;
+	}
+};
+
+struct BST
+{
+	node *root;
+
+	BST() { root = NULL; }
+
+	void insert(int number)
+	{
+		node *current_node = root, *prev_node;
+
+		if (root == NULL)
+		{
+			root = new node(number);
+			return;
+		}
+
+		while (current_node != NULL)
+		{
+			prev_node = current_node;
+			if (number < current_node->val)
+				current_node = current_node->left;
+			else if (number > current_node->val)
+				current_node = current_node->right;
+		}
+
+		if (number < prev_node->val)
+			prev_node->left  = new node(number);
+		else
+		{
+			cout<<"right added\n";
+			prev_node->right = new node(number);
+		}
+	}
+};
+
+int main()
+{
+	BST bst;
+	bst.insert(1);
+	bst.insert(2);
+	bst.insert(3);
+	bst.insert(4);
+	bst.insert(5);
+	bst.insert(6);
+
+	node *root = bst.root;
+
+	cout<<root->right->right->right->val;
+
+	return 0;
+}
